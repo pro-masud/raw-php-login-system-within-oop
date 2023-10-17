@@ -3,7 +3,7 @@
  * sing up from get data for
  * */ 
 if(isset($_POST['submit'])){
-   $userName = $_POST['username']; 
+   $userid = $_POST['userid']; 
    $password = $_POST['password'];
    $reppassword = $_POST['reppassword'];
    $email = $_POST['email'];
@@ -11,6 +11,8 @@ if(isset($_POST['submit'])){
   /**
    * include a singupContr class 
   */
+  include"../classes/singup.classes.php";
+  include"../classes/singup.contr.classes.php";
   
-  
+  $singup = new SingupControl($userid, $password, $reppassword, $email);
 }

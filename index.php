@@ -28,8 +28,8 @@
                     <p class="lead">Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
                     <form action="./includes/singup.php" method="POST" class="row g-3">
                         <div class="col-md-12">
-                            <label for="username" class="form-label">User Name</label>
-                            <input name="username" type="text" class="form-control" id="username">
+                            <label for="userid" class="form-label">User Name</label>
+                            <input name="userid" type="text" class="form-control" id="userid">
                         </div>
                         <div class="col-md-12">
                             <label for="password" class="form-label">Password</label>
