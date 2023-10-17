@@ -1,4 +1,5 @@
 <?php 
+include"./classes/singup.classes.php";
 /**
  * create a singup controler class
  * */ 
@@ -14,6 +15,41 @@ class SingupControl{
         $this -> password       = $password;
         $this -> reppassword    = $reppassword;
         $this -> email          = $email;
+    }
+
+
+    private function singupUser(){
+        // if emptyinput also false
+        if($this -> emptyInput() == false){
+            header("location: ../index.php?error=emptyinput");
+            exit();
+        }
+
+        // if invalide userid also false
+        if($this -> invalideUid() == false){
+            header("location: ../index.php?error=invalideuid");
+            exit();
+        }
+
+        // if invalide email also false
+        if($this -> invalideEmail() == false){
+            header("location: ../index.php?error=invalideemail");
+            exit();
+        }
+
+        // if invalide email also false
+        if($this -> matchPassword() == false){
+            header("location: ../index.php?error=matchpassword");
+            exit();
+        }
+
+        // if invalide email also false
+        if($this -> useridTokenCheck() == false){
+            header("location: ../index.php?error=useridtokencheck");
+            exit();
+        }
+
+        $this -> setUser();
     }
 
 
@@ -65,4 +101,17 @@ class SingupControl{
      }
 
 
+
+     /**
+     * User Checked
+     * */
+
+     private function useridTokenCheck(){
+        if(! $this -> checkUser($this -> userid, $this -> email)){
+            $this -> result = false;
+        }else{
+            $this -> result = true;
+        }
+        return  $this -> result;
+     }
 }
