@@ -1,25 +1,20 @@
 <?php 
-
 class Singup extends Dbh{
     /**
      * set user 
      * */ 
     public $resultCheck;
     protected function setUser($userid, $password, $email){
-        $sinup = $this -> connected() -> prepare("INSERT INTO users (userid, password, email) VALUES ('$userid','$password','$email')");
+        $sinup = $this -> connected() -> prepare("INSERT INTO users (userid, password, email) VALUES (?, ?, ?);");
    
-        if($sinup->execute([$userid, $email])){
+        // hash password
+        $hashPass = password_hash($password, PASSWORD_DEFAULT);
+        if(!$sinup->execute([$userid, $hashPass, $email])){
             $sinup = null;
             header("location: ../index.php?error=sinupfailed");
             exit();
         }
-
-        if($sinup->rowCount() > 0){
-            $this -> resultCheck = false;
-        }else{
-            $this -> resultCheck = true;
-        }
-        return  $this -> resultCheck;
+       $sinup = null;
     }
 
 
@@ -27,11 +22,11 @@ class Singup extends Dbh{
      * check user 
      * */ 
     protected function checkUser($userid, $email){
-        $sinup = $this -> connected() -> prepare("SELECT users_id FROM users WHERE users_id = ? OR email = ?");
+        $sinup = $this -> connected() -> prepare("SELECT users_id FROM users WHERE userid = ? OR email = ?");
    
-        if($sinup->execute([$userid, $email])){
+        if(!$sinup->execute([$userid, $email])){
             $sinup = null;
-            header("location: ../index.php?error=sinupfailed");
+            header("location: ../index.php?error=loginfailed");
             exit();
         }
 

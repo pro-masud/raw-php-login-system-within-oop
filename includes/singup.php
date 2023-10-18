@@ -11,8 +11,15 @@ if(isset($_POST['submit'])){
   /**
    * include a singupContr class 
   */
+  include"../classes/dbh.classes.php";
   include"../classes/singup.classes.php";
   include"../classes/singup.contr.classes.php";
   
   $singup = new SingupControl($userid, $password, $reppassword, $email);
+
+  // running error heandling
+  $singup -> singupUser();
+
+  //go to back front-end page
+  header("location: ../index.php?error=none");
 }
